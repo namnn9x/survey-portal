@@ -1,0 +1,77 @@
+---
+description: Project conventions for survey-portal public frontend
+globs: ["src/**/*.{ts,tsx}"]
+---
+
+# Survey Portal Public Frontend Conventions
+
+## Purpose
+Simple public-facing portal for users to fill out surveys. Users receive a survey link/code and fill out the form. No admin features, no authentication required.
+
+## Tech Stack
+- React 18 with TypeScript
+- Vite for build tool
+- React Router v6 for routing
+- TanStack Query (React Query) for data fetching
+- React Hook Form + Zod for form handling
+- Axios for HTTP client
+- Tailwind CSS for styling
+
+## Project Structure
+- `/src/pages/` - Page components (SurveyForm - main page)
+- `/src/components/` - Reusable UI components (QuestionField.tsx)
+- `/src/lib/` - API clients (axios.ts, surveyApi.ts)
+- `/src/types/` - TypeScript type definitions
+
+## Code Style
+- Use functional components with hooks
+- Use TypeScript strict mode
+- Use path alias `@/` for imports from src directory
+- Keep it simple - this is a public-facing form, not an admin panel
+- No authentication, no protected routes
+
+## API Integration
+- Base URL: `VITE_API_BASE_URL` from .env (default: http://localhost:3000/api)
+- All API calls go through `/src/lib/axios.ts` client
+- No authentication headers needed (public API)
+- API functions in `/src/lib/surveyApi.ts`
+
+## Routing
+- Main route: `/survey/:code` - Display and fill survey form
+- Fallback: `/` - Show form to enter survey code
+- No protected routes, no authentication
+
+## Forms
+- Use React Hook Form with Zod resolver for validation
+- QuestionField component handles all question types:
+  - text, textarea, number, email, date
+  - single_choice (radio), multiple_choice (checkbox)
+  - rating (1-5 scale)
+- Group questions by groupCode
+- Show required field indicators (*)
+- Display validation errors inline
+
+## Styling
+- Use Tailwind CSS utility classes
+- Clean, simple, user-friendly design
+- Mobile-responsive
+- Focus on readability and ease of use
+- Colors: indigo-600 for primary actions
+
+## Key Features
+- User receives survey link with code parameter
+- Form loads survey data and questions from API
+- User fills out form
+- Submit sends responses to backend (TODO: implement submission endpoint)
+- Success message after submission
+
+## Related Projects
+- Backend API: survey-core at /Users/nguyennhunam/Projects/survey-core
+- Admin Console: survey-console at /Users/nguyennhunam/Projects/survey-console
+- API Base URL: http://localhost:3000/api/v1/
+
+## Important Notes
+- This is NOT an admin panel - keep it simple
+- No user authentication required
+- Focus on user experience for filling surveys
+- Handle errors gracefully (survey not found, no questions, etc.)
